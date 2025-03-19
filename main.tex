@@ -1,0 +1,158 @@
+%% Short data paper template
+%% Created by Simon Hengchen and Nilo Pedrazzini for the Journal of Open Humanities Data (https://openhumanitiesdata.metajnl.com)
+
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{johd}
+\usepackage{braket}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\DC}{\mathbb{DC}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\e}{\epsilon}
+\newcommand{\til}{\widetilde}
+\renewcommand{\bar}{\overline}
+\newcommand{\dd}[1]{\mathrm{d}#1}
+
+\title{Postulates of quantum mechanics with dual-complex numbers}
+
+\author{Nathan Houyet$^{a}$, Dogukan Bakircioglu$^{b}$, Pablo Arrighi$^{b}$ \\
+        \small $^{a}$Université Paris-Saclay (student), France \\
+        \small $^{b}$QuaCS, LMF, France \\
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\noindent Adding an imaginary unit $i$ with $i^2 = -1$ to real numbers give rise to the complex numbers. Other definition of this imaginary unit can lead to useful numbers systems, like the dual numbers with $\e^2 = 0$. Complex-dual numbers are defined by adding both imaginary units to reals. We have: \\
+
+\begin{equation}
+\C = \R [i]/\langle i^2+1 \rangle
+\end{equation}
+\begin{equation}
+\D = \R [\e]/\langle \e^2 \rangle
+\end{equation}
+\begin{equation}
+\DC = \C [\e]/\langle \e^2 \rangle
+\end{equation}
+
+We usually denote complex numbers by the form $z = a + bi$ and complex-dual numbers by the form $w = z + t\e$.
+
+\subsection{Properties}
+
+Dual-complex numbers form a commutative ring with characteristic zero, but not a field. Division is given by
+\begin{equation}
+\frac{z_1 + t_1 \e}{z_2 + t_2 \e} = \frac{(z_1 + t_1 \e)(z_2 - t_2 \e)}{(z_2 + t_2 \e)(z_2 - t_2 \e)} = \frac{z_1 z_2 - z_1 t_2 \e + t_1 z_2 \e}{z_2^2} = \frac{z_1\e}{z_2} + \frac{z_2 t_1 - z_1 t_2 }{z_2^2} \e
+\end{equation}
+
+Square root is given by
+
+\begin{equation}
+\sqrt{x + y \e} = z + t \e \iff x + y \e = z^2 + 2 z t \e \iff z = \sqrt{x} \land t = \frac{y \e}{2 \sqrt{x}}
+\end{equation}
+
+Members of the set $\A = \{0 + t \e | t \in \C\}$ cannot be inverted and do not have a square root.
+
+A total order on duals with $\e > 0$ gives $\e < r \quad \forall r \in \R^+$ because $\e > r > 0 \implies \e^2 = 0 > r^2 > 0$. Intuitively it means $\e$ is an infinitesimal positive number. The ordering is therefore "lexical": $a_1 + b_1 \e \leq a_2 + b_2 \e \iff a_1 < a_2 \lor (a_1 = a_2 \land b_1 \leq b_2)$. We could consider an other, partial ordering $a_1 + b_1 \e \preceq a_2 + b_2 \e \iff a_1 \preceq a_2 \land b_1 \preceq b_2$.
+
+\subsection{Conjugate}
+
+The complex conjugate of a complex $z = a + bi$ is defined as $\bar{z} = a - bi$. The same definition is used for (real) dual numbers $w = a + b\e$ ($a, b \in \R$) where the dual conjugate is defined as $\til{w} = a - b \e$. Five definitions of a conjugate are suggested in \cite{messelmi2015}:
+
+\begin{equation}
+\bar{w} = \bar{z} + \bar{t}\e
+\end{equation}
+\begin{equation}
+\til{w} = z - t\e
+\end{equation}
+\begin{equation}
+\bar{\til{w}} = \bar{z} - \bar{t}\e
+\end{equation}
+\begin{equation}
+w^* = \bar{z}(1-t\e/z)
+\end{equation}
+\begin{equation}
+w` = t - z \e
+\end{equation}
+
+Together with the identity conjugate $id(w) = w$, $\bar{~}$, $\til{~}$ and $\bar{\til{~}}$ form the Klein group. $w^*$ is the only possible definition with both $Re(w) = Re(w^*)$ and $w^*w \in \R$, but is non-linear. This makes it impossible to extend postulates of quantum mechanics, which are expressed with linear algebra. Other definitions such as $|z| + 2Re(z\bar{t})\e/|z|$ suffer the same limitation. We need therefore a conjugate that is both linear and allows us to define a non-complex norm. $\bar{w}$ is a good candidate.
+
+We have
+
+\begin{equation}
+\bar{w_1 + w_2} = \bar{w_1} + \bar{w_2}
+\end{equation}
+
+\begin{equation}
+\bar{w_1  w_2} = \bar{w_1} ~ \bar{w_2}
+\end{equation}
+
+\begin{equation}
+\bar{\bar{w}} = w
+\end{equation}
+
+\begin{equation}
+\bar{w}w = |z|^2 + 2 Re(z\bar{t}) \in \D
+\end{equation}
+
+\begin{equation}
+|w| = \sqrt{\bar{w}w} = |z| + Re(z\bar{t})/|z| \geq 0
+\end{equation}
+
+\begin{equation}
+|w| = 0 \iff z = 0
+\end{equation}
+
+\section{Extending postulates}
+
+\paragraph{Postulate 1.} We define a state as a dual-complex vector of norm $1 + b \e$ where $b \in \R$.
+
+\paragraph{Postulate 2.} The evolution of a system is given by a matrix $U_{\e} = U + V \e$ where $U$ is unitary. We quickly check that
+
+\begin{equation}
+||U_{\e} \ket{\psi}||^2 = \bra{\psi} (U + V \e)^\dagger (U + V \e) \ket{\psi} = \braket{\psi | \psi} + O(\e)
+\end{equation}
+
+Given our definition of square root, we have that norm $1 + O(\e)$ is preserved.
+
+\paragraph{Postulate 3.} A measurement is defined by a collection $\{M_m\}$ of measurement operators with $\sum_m M_m^\dagger M_m = I + \e A$ where $A$ is a matrix. We still have the property that $M_m^\dagger M_m$ is semipositive. Given $M_{\e} = M + N \e$
+
+\begin{equation}
+M_{\e}^\dagger M_{\e} = M^\dagger M + \e[M^\dagger N + (M^\dagger N)^\dagger]
+\end{equation}
+
+$M^\dagger M$ is semipositive and $\bra{\psi} (M^\dagger N + (M^\dagger N)^\dagger) \ket{\psi}$ is always real. In the case where $\bra{\psi} M^\dagger M \ket{\psi} = 0$ we necessarily have that $M \ket{\psi} = \ket{v} \e \in \A^n$ (that is a purely dual-imaginary vector) which means that
+
+\begin{equation}
+\e \bra{\psi} (M^\dagger N + N^\dagger M) \ket{\psi} = \e [\e \bra{v} N \ket{\psi} + \bra{\psi} N^\dagger \ket{v} \e] = 0
+\end{equation}
+
+Therefore $M_{\e}^\dagger M_{\e}$ is always semipositive. Probabilities are therefore non-negative and sum to $1 + O(\e)$.
+
+\subsection{Other constraints}
+
+\paragraph{Partial ordering} As suggested by Dogukan, rather than considering $\e$ an infinitesimal number, we may be simply thinking of it as another dimension. We consider the partial ordering $\prec$. In this case, not all operators can be considered valid for a measurement, because we still want positive probabilities. Enforcing $M_{\e} = M + \e N$ such that $M^\dagger N > 0$ is enough to guarantee that both the dual and non-dual part of the probability is non-negative.
+
+\paragraph{Positive extension} We may require the norm of states to be $1 + b \e$ with $b > 0$ (we extend the Bloch sphere in only one direction). In this case we have
+
+\begin{equation}
+||U_{\e} \ket{\psi}||^2 = \bra{\psi} (U + V \e)^\dagger (U + V \e) \ket{\psi} = \braket{\psi | \psi} + \e \bra{\psi}(U^\dagger V + V^\dagger U) \ket{\psi}
+\end{equation}
+
+Enforcing a similar constraint that $U^\dagger V > 0$ is suffient to maintain a valid norm.
+
+\paragraph{Probabilities sum to one} We could also only accept when $\sum_m M_m^\dagger M_m = I$. Since there is (by default) no particular constraint on $M^\dagger N + N^\dagger M$ (it need not to be, for instance, semipositive), the dual parts can cancel each other. In this case the sum of probabilities is one even though we can have dual probabilities.
+
+\paragraph{Norm is exactly one} Rather than allow a norm of one plus a dual-imaginary part, we can enforce a norm of precisely one. It means that evolution operators are now purely complex unitaries. It is still possible to get dual probabilities when measuring, even when enforcing that the sum of measurement operators is the identitiy.
+
+\bibliographystyle{johd}
+\bibliography{bib}
+
+\end{document}
