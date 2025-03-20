@@ -31,7 +31,7 @@
 \maketitle
 
 \section{Introduction}
-\noindent Adding an imaginary unit $i$ with $i^2 = -1$ to real numbers give rise to the complex numbers. Other definition of this imaginary unit can lead to useful numbers systems, like the dual numbers with $\e^2 = 0$. Complex-dual numbers are defined by adding both imaginary units to reals. We have: \\
+\noindent Adding an imaginary unit $i$ with $i^2 = -1$ to real numbers gives rise to the complex numbers. Other definition of this imaginary unit can lead to useful numbers systems, like the dual numbers with $\e^2 = 0$. Complex-dual numbers are defined by adding both imaginary units to reals. We have: \\
 
 \begin{equation}
 \C = \R [i]/\langle i^2+1 \rangle
@@ -49,16 +49,16 @@ We usually denote complex numbers by the form $z = a + bi$ and complex-dual numb
 
 Dual-complex numbers form a commutative ring with characteristic zero, but not a field. Division is given by
 \begin{equation}
-\frac{z_1 + t_1 \e}{z_2 + t_2 \e} = \frac{(z_1 + t_1 \e)(z_2 - t_2 \e)}{(z_2 + t_2 \e)(z_2 - t_2 \e)} = \frac{z_1 z_2 - z_1 t_2 \e + t_1 z_2 \e}{z_2^2} = \frac{z_1\e}{z_2} + \frac{z_2 t_1 - z_1 t_2 }{z_2^2} \e
+\frac{z_1 + t_1 \e}{z_2 + t_2 \e} = \frac{(z_1 + t_1 \e)(z_2 - t_2 \e)}{(z_2 + t_2 \e)(z_2 - t_2 \e)} = \frac{z_1 z_2 - z_1 t_2 \e + t_1 z_2 \e}{z_2^2} = \frac{z_1}{z_2} + \frac{z_2 t_1 - z_1 t_2 }{z_2^2} \e
 \end{equation}
 
 Square root is given by
 
 \begin{equation}
-\sqrt{x + y \e} = z + t \e \iff x + y \e = z^2 + 2 z t \e \iff z = \sqrt{x} \land t = \frac{y \e}{2 \sqrt{x}}
+\sqrt{x + y \e} = z + t \e \iff x + y \e = z^2 + 2 z t \e \iff z = \sqrt{x} \land t = \frac{y}{2 \sqrt{x}}
 \end{equation}
 
-Members of the set $\A = \{0 + t \e | t \in \C\}$ cannot be inverted and do not have a square root.
+Members of the set $\A = \{0 + t \e | t \in \C\}$ cannot be inverted and do not have a square root. More generally $(z + t\e)^n = z^n + n z^{n-1} t \e$ and $\sqrt[n]{z + t \e} = \sqrt[n]{z} + (\frac{t}{n(\sqrt[n]{z})^{n-1}}) \e$
 
 A total order on duals with $\e > 0$ gives $\e < r \quad \forall r \in \R^+$ because $\e > r > 0 \implies \e^2 = 0 > r^2 > 0$. Intuitively it means $\e$ is an infinitesimal positive number. The ordering is therefore "lexical": $a_1 + b_1 \e \leq a_2 + b_2 \e \iff a_1 < a_2 \lor (a_1 = a_2 \land b_1 \leq b_2)$. We could consider an other, partial ordering $a_1 + b_1 \e \preceq a_2 + b_2 \e \iff a_1 \preceq a_2 \land b_1 \preceq b_2$.
 
@@ -99,6 +99,10 @@ We have
 \end{equation}
 
 \begin{equation}
+w + \bar{w} = 2 Re(z) + 2 Re(t) \e
+\end{equation}
+
+\begin{equation}
 \bar{w}w = |z|^2 + 2 Re(z\bar{t}) \in \D
 \end{equation}
 
@@ -109,6 +113,8 @@ We have
 \begin{equation}
 |w| = 0 \iff z = 0
 \end{equation}
+
+We can then define the adjoint operator $\dagger$ as $A^\dagger = (A^*)^T$ and the norm $||\ket{\psi}||$. In particular we have $A^{\dagger \dagger} = A$, $(AB)^\dagger = B^\dagger A^\dagger$ and $||\ket{\psi}|| \geq 0$.
 
 \section{Extending postulates}
 
@@ -128,7 +134,7 @@ Given our definition of square root, we have that norm $1 + O(\e)$ is preserved.
 M_{\e}^\dagger M_{\e} = M^\dagger M + \e[M^\dagger N + (M^\dagger N)^\dagger]
 \end{equation}
 
-$M^\dagger M$ is semipositive and $\bra{\psi} (M^\dagger N + (M^\dagger N)^\dagger) \ket{\psi}$ is always real. In the case where $\bra{\psi} M^\dagger M \ket{\psi} = 0$ we necessarily have that $M \ket{\psi} = \ket{v} \e \in \A^n$ (that is a purely dual-imaginary vector) which means that
+$M^\dagger M$ is semipositive and $\bra{\psi} (M^\dagger N + (M^\dagger N)^\dagger) \ket{\psi}$ is always dual (non-complex). In the case where $\bra{\psi} M^\dagger M \ket{\psi} = 0$ we necessarily have that $M \ket{\psi} = \ket{v} \e \in \A^n$ (that is a purely dual-imaginary vector) which means that
 
 \begin{equation}
 \e \bra{\psi} (M^\dagger N + N^\dagger M) \ket{\psi} = \e [\e \bra{v} N \ket{\psi} + \bra{\psi} N^\dagger \ket{v} \e] = 0
@@ -138,19 +144,30 @@ Therefore $M_{\e}^\dagger M_{\e}$ is always semipositive. Probabilities are ther
 
 \subsection{Other constraints}
 
-\paragraph{Partial ordering} As suggested by Dogukan, rather than considering $\e$ an infinitesimal number, we may be simply thinking of it as another dimension. We consider the partial ordering $\prec$. In this case, not all operators can be considered valid for a measurement, because we still want positive probabilities. Enforcing $M_{\e} = M + \e N$ such that $M^\dagger N > 0$ is enough to guarantee that both the dual and non-dual part of the probability is non-negative.
+\paragraph{Partial ordering} As suggested by Dogukan, rather than considering $\e$ an infinitesimal number, we may be simply thinking of it as another dimension. We consider the partial ordering $\prec$. In this case, not all operators can be considered valid for a measurement, because we still want nonnegative probabilities. Enforcing $M_{\e} = M + \e N$ such that $M^\dagger N \geq 0$ is enough to guarantee that both the dual and non-dual part of the probability is non-negative.
 
-\paragraph{Positive extension} We may require the norm of states to be $1 + b \e$ with $b > 0$ (we extend the Bloch sphere in only one direction). In this case we have
+\paragraph{Positive extension} We may require the norm of states to be $1 + b \e$ with $b \geq 0$ (we extend the Bloch sphere in only one direction). In this case we have
 
 \begin{equation}
 ||U_{\e} \ket{\psi}||^2 = \bra{\psi} (U + V \e)^\dagger (U + V \e) \ket{\psi} = \braket{\psi | \psi} + \e \bra{\psi}(U^\dagger V + V^\dagger U) \ket{\psi}
 \end{equation}
 
-Enforcing a similar constraint that $U^\dagger V > 0$ is suffient to maintain a valid norm.
+Enforcing a similar constraint that $U^\dagger V \geq 0$ is suffient to maintain a valid norm.
 
 \paragraph{Probabilities sum to one} We could also only accept when $\sum_m M_m^\dagger M_m = I$. Since there is (by default) no particular constraint on $M^\dagger N + N^\dagger M$ (it need not to be, for instance, semipositive), the dual parts can cancel each other. In this case the sum of probabilities is one even though we can have dual probabilities.
 
 \paragraph{Norm is exactly one} Rather than allow a norm of one plus a dual-imaginary part, we can enforce a norm of precisely one. It means that evolution operators are now purely complex unitaries. It is still possible to get dual probabilities when measuring, even when enforcing that the sum of measurement operators is the identitiy.
+
+A vector
+\begin{equation}
+\ket{\psi} = \braket{\psi_1, \dots, \psi_n} = \braket{z_1 + t_1 \e, \dots, z_n + t_n \e} = \braket{a_1 + b_1i + (c_1 + d_1i)\e, \dots, a_n + b_ni + (c_n + d_ni)\e}
+\end{equation}
+
+is real if and only if
+
+\begin{equation}
+\sum_i Re(z_i \bar{t_i}) = \sum_i \bar{z_i} t_i + z_i \bar{t_i} = \sum_i a_ic_i + b_id_i = 0
+\end{equation}
 
 \bibliographystyle{johd}
 \bibliography{bib}
