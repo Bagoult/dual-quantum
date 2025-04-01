@@ -31,7 +31,7 @@
 \maketitle
 
 \section{Introduction}
-\noindent Adding an imaginary unit $i$ with $i^2 = -1$ to real numbers gives rise to the complex numbers. Other definition of this imaginary unit can lead to useful numbers systems, like the dual numbers with $\e^2 = 0$. Complex-dual numbers are defined by adding both imaginary units to reals. We have: \\
+\noindent Adding an imaginary unit $i$ with $i^2 = -1$ to real numbers gives rise to the complex numbers. Other definition of this imaginary unit can lead to useful numbers systems, like the dual numbers with $\e^2 = 0$. Complex-dual numbers are defined by adding both imaginary units to reals. We have:
 
 \begin{equation}
 \C = \R [i]/\langle i^2+1 \rangle
@@ -43,26 +43,115 @@
 \DC = \C [\e]/\langle \e^2 \rangle
 \end{equation}
 
-We usually denote complex numbers by the form $z = a + bi$ and complex-dual numbers by the form $w = z + t\e$.
-
-\subsection{Properties}
-
-Dual-complex numbers form a commutative ring with characteristic zero, but not a field. Division is given by
-\begin{equation}
-\frac{z_1 + t_1 \e}{z_2 + t_2 \e} = \frac{(z_1 + t_1 \e)(z_2 - t_2 \e)}{(z_2 + t_2 \e)(z_2 - t_2 \e)} = \frac{z_1 z_2 - z_1 t_2 \e + t_1 z_2 \e}{z_2^2} = \frac{z_1}{z_2} + \frac{z_2 t_1 - z_1 t_2 }{z_2^2} \e
-\end{equation}
-
-Square root is given by
+We usually denote complex numbers by the form $z = a + bi$ and complex-dual numbers by the form $w = z + t\e$. We use the terms "imaginary-complex" and "imaginary-dual" to distinguish between numbers of the form $bi$ and $t\e$. We introduce the following notation
 
 \begin{equation}
-\sqrt{x + y \e} = z + t \e \iff x + y \e = z^2 + 2 z t \e \iff z = \sqrt{x} \land t = \frac{y}{2 \sqrt{x}}
+Du: \DC \to \C: w = z + t\e \to (w \e)/\e = t
 \end{equation}
 
-Members of the set $\A = \{0 + t \e | t \in \C\}$ cannot be inverted and do not have a square root. More generally $(z + t\e)^n = z^n + n z^{n-1} t \e$ and $\sqrt[n]{z + t \e} = \sqrt[n]{z} + (\frac{t}{n(\sqrt[n]{z})^{n-1}}) \e$
+\begin{equation}
+ND: \DC \to \C: w = z + t\e \to w - Du(w) \e = z
+\end{equation}
 
-A total order on duals with $\e > 0$ gives $\e < r \quad \forall r \in \R^+$ because $\e > r > 0 \implies \e^2 = 0 > r^2 > 0$. Intuitively it means $\e$ is an infinitesimal positive number. The ordering is therefore "lexical": $a_1 + b_1 \e \leq a_2 + b_2 \e \iff a_1 < a_2 \lor (a_1 = a_2 \land b_1 \leq b_2)$. We could consider an other, partial ordering $a_1 + b_1 \e \preceq a_2 + b_2 \e \iff a_1 \preceq a_2 \land b_1 \preceq b_2$.
+$Im(w)$ is ambiguous because their are two imaginary units in complex-duals. We use the following notation. For a number $w = z + t\e$ with $z = a + bi$ and $t = c + di$ we write
 
-\subsection{Conjugate}
+\begin{equation}
+R: \DC \to \R: w \to Re(ND(w)) = a
+\end{equation}
+
+\begin{equation}
+C: \DC \to \R: w \to Im(ND(w)) = b
+\end{equation}
+
+\begin{equation}
+D: \DC \to \R: w \to Re(Du(w)) = c
+\end{equation}
+
+\begin{equation}
+DC: \DC \to \R: w \to Im(Du(w)) = d
+\end{equation}
+
+\subsection{Operations on dual-complex numbers}
+
+Dual-complex numbers form a commutative ring with characteristic zero, but not a field. We define addition and division
+
+\begin{equation}
+(z_1 + t_1 \e) + (z_2 + t_2 \e) = (z_1 + z_2) + (t_1 + t_2) \e
+\end{equation}
+
+\begin{equation}
+(z_1 + t_1 \e) (z_2 + t_2 \e) = (z_1 z_2) + (t_1 z_2 + z_1 t_2) \e
+\end{equation}
+
+Notice how with the dual-imaginary unit $z_2 t_2 \e^2$ vanish into oblivion when with the complex-imaginary unit it becomes real.
+
+Before talking about division, we can single out the set $\A = \{0 + t \e | t \in \C\}$ of purely imaginary-dual numbers. In fact, division is a bit problematic. We can observe three cases when dividing $w_1 = z_1 + t_1 \e$ by $w_2 = z_2 + t_2 \e$:
+
+\begin{enumerate}
+        \item $z_2 \neq 0$. In this case division is well defined and given by
+        \begin{equation}
+        \frac{z_1 + t_1 \e}{z_2 + t_2 \e} = \frac{(z_1 + t_1 \e)(z_2 - t_2 \e)}{(z_2 + t_2 \e)(z_2 - t_2 \e)} = \frac{z_1 z_2 - z_1 t_2 \e + t_1 z_2 \e}{z_2^2} = \frac{z_1}{z_2} + \frac{z_2 t_1 - z_1 t_2 }{z_2^2} \e
+        \end{equation}
+        \item $z_2 = 0$ and we divide the dual-imaginary part ($z_1 = 0$). The usual constraint that $w' = \frac{w_1}{w2} \iff w'w_2 = w1$ leaves us (infinitely) many solutions. Let's say that we want to find $w' = z' + t'$, the quotient of $w1$ and $w2$.
+        \begin{equation}
+        z' + t' \e = \frac{t_1 \e}{t_2 \e} \iff z' t_2 \e + t' t_2 \e^2 = t_1 \e \iff z' = t_1/t_2
+        \end{equation}
+        There is no constraint on $t'$. However, a natural definition would be $t' = 0$, implying $\frac{t'_1 \e}{t'_2 \e} = \frac{t'_1}{t'_2}$.
+        \item $z_2 = 0$ and we divide the (non-zero) non-dual part $z_1$. In this case we have no solution because $z' + t'\e = \frac{z_1}{t_2 \e} \iff z' t_2 \e = z_1$ which is impossible (by hypothesis $z', t_2, z_1 \in \C$).
+\end{enumerate}
+
+Division between $w_1$ and $w_2$ is therefore defined for $w_1 \in \A$ or $w_2 \in \DC \setminus \A$.
+
+Other operations and functions deserve our attention. In particular rooting and exponentiating can be derived using the binomial theorem
+
+\begin{equation}
+(z + t\e)^n = z^n + n z^{n-1} t \e
+\end{equation}
+
+\begin{equation}
+\sqrt[n]{z + t \e} = \sqrt[n]{z} + (\frac{t}{n(\sqrt[n]{z})^{n-1}}) \e
+\end{equation}
+
+For the special case where $n = 2$ we have the useful relations $(z+t\e)^2 = z^2 + 2zt\e$ and $\sqrt{z+t\e} = \sqrt{z} + t\e/(2 \sqrt{z})$. Notice how neatly the dual part of the antecedant never seem to appear in the non-dual part of the image in the operation we've presented. More generally if a function $f: \C \to \C$ is analytic, we can extend it to $\DC$ by defining $\hat{f}: \DC \to \DC: z + t\e \to \sum_{n=0}^{\infty} \frac{b^n \e^n f^{(n)}(z)}{n!} = f(z) + b f(z) \e$. A corollary is that we can differentiate $f$ using the formula $f'(z) = (f(z + \e) - f(z))/\e$.
+
+\subsection{Automatic differentiation}
+
+Dual numbers are useful for automatic differentiation. Given an analytic complex-to-complex function $f(x)$:
+
+\begin{equation}
+        \hat{f}(x + \e) = f(x) + \e f'(x) \implies f'(x) = (\hat{f}(x) - f(x))/\e
+\end{equation}
+
+In numerical analysis or in algebraic computing, we can find $f'(x)$ by implementing $\e$. An efficient way to do so is to use matrices to represent dual numbers. A number $z + t \e$ is represented as
+
+$$
+\begin{bmatrix}
+z & t \\
+0 & z
+\end{bmatrix}
+$$
+
+Note we can also represent traditional complex numbers as two-by-two matrices, in which case numbers in $\DC$ are represented as four-by-four matrices. This technique is compatible with working with $f$ when it is a function from scalars to vectors or with composing functions.
+
+\subsection{Ordering dual and dual-complex numbers}
+
+We know that while $\R$ can be ordered consistently with the field operations, this is not the case for $\C$ because if $i > 0$ then $i^2 = -1 > 0$. On the other hand if $-i > 0$ then $(-i)^2 = -1 > 0$. Partial orderings can still be defined though.
+
+Luckily this is not the case for (non-complex) dual. There is only one total ordering possible, up to the sign of $\e$. We take $\e > 0$ (choosing $\e < 0$ actually gives the same ordering but using the alternative imaginary unit $\e' = -\e$).
+
+\begin{equation}
+\e > r > 0 \implies \e^2 = 0 > r^2 > 0 \text{ is a contradiction and therefore } \e < r \quad \forall r \in R^+
+\end{equation}
+
+Intuitively this shows us that we think of $\e$ as an infinitesimal whose square is precisely zero. It also tells us that we can think of the ordering as lexical, i.e.
+
+\begin{equation}
+a_1 + b_1 \e \leq a_2 + b_2 \e \iff a_1 < a_2 \lor (a_1 = a_2 \land b_1 \leq b_2)
+\end{equation}
+
+As pointed out by Dogukan, we might want to think of $\e$ as another dimension rather than an infinitesimal. We say that $a + b \e \prec c + d \e$ if $a < c$ and $b < d$. This ordering is partial.
+
+\subsection{Conjugation}
 
 The complex conjugate of a complex $z = a + bi$ is defined as $\bar{z} = a - bi$. The same definition is used for (real) dual numbers $w = a + b\e$ ($a, b \in \R$) where the dual conjugate is defined as $\til{w} = a - b \e$. Five definitions of a conjugate are suggested in \cite{messelmi2015}:
 
@@ -82,7 +171,7 @@ w^* = \bar{z}(1-t\e/z)
 w` = t - z \e
 \end{equation}
 
-Together with the identity conjugate $id(w) = w$, $\bar{~}$, $\til{~}$ and $\bar{\til{~}}$ form the Klein group. $w^*$ is the only possible definition with both $Re(w) = Re(w^*)$ and $w^*w \in \R$, but is non-linear. This makes it impossible to extend postulates of quantum mechanics, which are expressed with linear algebra. Other definitions such as $|z| + 2Re(z\bar{t})\e/|z|$ suffer the same limitation. We need therefore a conjugate that is both linear and allows us to define a non-complex norm. $\bar{w}$ is a good candidate.
+Together with the identity conjugate $id(w) = w$, $\bar{\cdot}$, $\til{\cdot}$ and $\bar{\til{\cdot}}$ form the Klein group. $w^*$ is the only possible definition with both $Re(w) = Re(w^*)$ and $w^*w \in \R$, but is non-linear. This makes it impossible to extend postulates of quantum mechanics, which are expressed with linear algebra. For instance, we lose properties such as $(A + B)^\dagger = A^\dagger + B^\dagger$ making it impossible to use the useful definition $A^\dagger = (A^*)^T$. Other definitions such as $|z| + 2Re(z\bar{t})\e/|z|$ suffer the same limitations. We need therefore a conjugate that is both linear and allows us to define a non-complex norm. $\bar{w}$ is a good candidate.
 
 We have
 
@@ -118,17 +207,64 @@ We can then define the adjoint operator $\dagger$ as $A^\dagger = (A^*)^T$ and t
 
 \section{Extending postulates}
 
-\paragraph{Postulate 1.} We define a state as a dual-complex vector of norm $1 + b \e$ where $b \in \R$.
+\paragraph{Postulate 1.} Traditional quantum mechanics starts by defining a state as a unit complex vector in a Hilbert space. In our version of QM, entries of vectors are complex duals and the norm is dual. Our task is to define a set of "states" then extend the other postulates to work with this new definition.
 
-\paragraph{Postulate 2.} The evolution of a system is given by a matrix $U_{\e} = U + V \e$ where $U$ is unitary. We quickly check that
+Here we decide that we are going to extend functions representing the system over time. Say $\ket{\psi(t)}$ is the state at time $t$. Then we will work with
 
 \begin{equation}
-||U_{\e} \ket{\psi}||^2 = \bra{\psi} (U + V \e)^\dagger (U + V \e) \ket{\psi} = \braket{\psi | \psi} + O(\e)
+\ket{\hat{\psi}(t + t' \e)} = \ket{\psi(t)} + t' \e \frac{d\ket{\psi(t)}}{dt}
 \end{equation}
 
-Given our definition of square root, we have that norm $1 + O(\e)$ is preserved.
+More generally if we have a complex-state parametrized by a real or complex parameter $z$, we get a complex-dual-"state" when extending $z$ to $\DC$ ($z + t\e$). The non-dual part of this complex-dual-"state" is a complex-state, while the non-dual part can be anything (it depends on the function we are considering). This motivate the following definition of a state:
 
-\paragraph{Postulate 3.} A measurement is defined by a collection $\{M_m\}$ of measurement operators with $\sum_m M_m^\dagger M_m = I + \e A$ where $A$ is a matrix. We still have the property that $M_m^\dagger M_m$ is semipositive. Given $M_{\e} = M + N \e$
+\begin{equation}
+\ket{\psi} \text{ is a a state if and only if } ND(|| \ket{\psi} ||) = 1
+\end{equation}
+
+\paragraph{Postulate 2.} Given our definition of a state, we must extend the concept of unitary.
+
+A unitary is a square matrix $U$ such that $||U \ket{\psi}|| = ||\ket{\psi}||$ for all $\ket{\phi}$, so it preserves "stateness". Now if $\ket{\psi_\e}$ is a complex-dual-state and $U_{\e} = U + V \e$ where $U$ is unitary, we quickly see that $U_{\e} \ket{\psi_\e}$ is also a state.
+
+\begin{equation}
+||U_{\e} \ket{\psi_\e}||^2 = \bra{\psi_\e} (U + V \e)^\dagger (U + V \e) \ket{\psi_\e} = \braket{\psi_\e | \psi_\e} + O(\e)
+\end{equation}
+
+Given our definition of square root, we have that norm $1 + O(\e)$ is preserved. Therefore,
+
+\begin{equation}
+U_{\e} = U + V \e \text{ describes the evolution of a closed system if an only if } U \text{ is a unitary. }
+\end{equation}
+
+That being said, let us forget about complex-dual unitaries for a moment. Let's say that our system a time $t$ is described by $\ket{\psi(t)}$. Schrödinger's equation says that
+
+\begin{equation}
+i\hbar \frac{d \ket{\psi(t)}}{dt} = H \ket{\psi(t)}
+\end{equation}
+
+The evolution of our closed system from time $t_1$ to time $t_2$ is described by $U(t_1, t_2) = \exp(\frac{-i H (t_2 - t_1)}{\hbar})$. Note how $H$ and $U(t_1, t_2)$ commute: since $H = \sum_E E \ket{E} \bra{E}$ we have
+
+\begin{equation}
+U(t_1, t_2) = \exp(\frac{-i H (t_2 - t_1)}{\hbar}) = \exp(\sum_E \frac{-i E (t_2 - t_1)}{\hbar} \ket{E} \bra{E}) = \exp(\sum_E \frac{-i E (t_2 - t_1)}{\hbar}) \ket{E} \bra{E}.
+\end{equation}
+
+$H$ and $U(t_1, t_2)$ are therefore simultaneously diagonalizable and therefore their commutator is zero. Until now, our system is non-dual, so let's add some $\e$. Say we have
+
+\begin{equation}
+\ket{\psi_\e(t)} := \ket{\hat{\psi}(t + \e)} = \ket{\psi(t)} + \e \ket{\psi'(t)} = (I + \frac{\e H}{i \hbar}) \ket{\psi(t)}
+\end{equation}
+
+What happens when we try to apply $U(t_1, t_2)$ to $\ket{\psi_\e(t)}$? We get
+
+\begin{equation}
+U(t_1, t_2) \ket{\psi_\e(t_1)} = (U(t_1, t_2) I + U(t_1, t_2) \frac{\e H}{i \hbar}) \ket{\psi(t_1)} \\
+                               & (I U(t_1, t_2) + \frac{\e H}{i \hbar} U(t_1, t_2)) \ket{\psi(t_1)} \\
+                               & (I + \frac{\e H}{i \hbar}) U(t_1, t_2) \ket{\psi(t_1)} \\
+                               & (I + \frac{\e H}{i \hbar}) \ket{\psi(t_2)} = \ket{\psi_\e(t_2)} \\
+\end{equation}
+
+Alternatively, we can directly see this result from what we said in section 1.2. Still this result shows us that keeping
+
+\paragraph{Postulate 3.} A measurement is defined by a collection $\{M_m\}$ of measurement operators with $\sum_m M_m^\dagger M_m = I$. Again, we have the property that $M_m^\dagger M_m$ is semipositive. Given $M_{\e} = M + N \e$
 
 \begin{equation}
 M_{\e}^\dagger M_{\e} = M^\dagger M + \e[M^\dagger N + (M^\dagger N)^\dagger]
@@ -142,6 +278,8 @@ $M^\dagger M$ is semipositive and $\bra{\psi} (M^\dagger N + (M^\dagger N)^\dagg
 
 Therefore $M_{\e}^\dagger M_{\e}$ is always semipositive. Probabilities are therefore non-negative and sum to $1 + O(\e)$.
 
+\paragraph{Postulate 4.} Suppose $\ket{\psi_1}$ and $\ket{\psi_2}$ are states. Then $\ket{\psi_1} \otimes \ket{\psi_2}$ is also a state. Tensor product is compatible with the other postulates.
+
 \subsection{Other constraints}
 
 \paragraph{Partial ordering} As suggested by Dogukan, rather than considering $\e$ an infinitesimal number, we may be simply thinking of it as another dimension. We consider the partial ordering $\prec$. In this case, not all operators can be considered valid for a measurement, because we still want nonnegative probabilities. Enforcing $M_{\e} = M + \e N$ such that $M^\dagger N \geq 0$ is enough to guarantee that both the dual and non-dual part of the probability is non-negative.
@@ -153,8 +291,6 @@ Therefore $M_{\e}^\dagger M_{\e}$ is always semipositive. Probabilities are ther
 \end{equation}
 
 Enforcing a similar constraint that $U^\dagger V \geq 0$ is suffient to maintain a valid norm.
-
-\paragraph{Probabilities sum to one} We could also only accept when $\sum_m M_m^\dagger M_m = I$. Since there is (by default) no particular constraint on $M^\dagger N + N^\dagger M$ (it need not to be, for instance, semipositive), the dual parts can cancel each other. In this case the sum of probabilities is one even though we can have dual probabilities.
 
 \paragraph{Norm is exactly one} Rather than allow a norm of one plus a dual-imaginary part, we can enforce a norm of precisely one.
 Evolution must conserve this property so $U^\dagger V + V^\dagger U = 0$.
