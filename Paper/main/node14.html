@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2025 (Released January 1, 2025) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Postulate 1.</TITLE>
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2025">
+
+<LINK REL="STYLESHEET" HREF="main.css">
+
+<LINK REL="previous" HREF="node13.html">
+<LINK REL="next" HREF="node15.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A
+ HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A
+ HREF="node15.html">Evolution</A>
+<B> Up:</B> <A
+ HREF="node13.html">State space</A>
+<B> Previous:</B> <A
+ HREF="node13.html">State space</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H4><A ID="SECTION00041010000000000000">
+Postulate 1.</A>
+</H4><SPAN CLASS="SMALL"><SPAN CLASS="SMALL"> An <SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img18.png"
+ ALT="ALT="""></SPAN>-state vector is a unit dual-complex vector.
+
+<BR></SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL">Is this potulate &ldquo;physical&rdquo;? If we extend our physical complex system with <SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img18.png"
+ ALT="ALT="""></SPAN>, is the norm <SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img132.png"
+ ALT="ALT="""></SPAN>? We can first notice
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL"></SPAN></SPAN><P></P>
+<DIV CLASS="displaymath"><!-- MATH
+ \begin{equation}
+\begin{split}
+  || \ket{\psi(t + y \epsilon )} || = 1 &\iff \braket{\psi(t + y \epsilon ) | \psi(t + y \epsilon )} = 1 \\
+                                 &\iff \braket{\psi(t) | \psi(t)} + y \epsilon \braket{\psi'(t) | \psi(t)} + y \epsilon \braket{\psi(t) | \psi'(t)} + y^2 \epsilon ^2 \braket{\psi'(t) | \psi'(t)} = 1 \\
+                                 &\iff \braket{\psi(t) | \psi(t)} + 2 y \epsilon Re(\braket{\psi'(t) | \psi(t)}) = 1\\
+                                 &\iff \begin{cases}
+      \text{(i) } \braket{\psi(t) | \psi(t)} \\
+      \text{(ii) } \braket{\psi'(t) | \psi(t)} \in i\mathbb{R}\end{cases}
+ \end{split}
+\end{equation}
+ -->
+<TABLE CLASS="equation" >
+<TR>
+<TD  style="text-align:center;"><SPAN CLASS="MATH"><IMG
+ STYLE="height: 0.21ex; vertical-align: -0.12ex; " SRC="img5.png"
+ ALT="\begin{indisplay}\begin{split}
+\vert\vert \ket{\psi(t + y \epsilon )} \vert\vert...
+...ket{\psi'(t) \vert \psi(t)} \in i\mathbb{R}\end{cases}\end{split}\end{indisplay}"></SPAN></TD>
+<TD  CLASS="eqno" style="text-align:right">
+(<SPAN CLASS="arabic">38</SPAN>)</TD></TR>
+</TABLE></DIV>
+<P></P><SPAN CLASS="SMALL"><SPAN CLASS="SMALL">
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL">Condition (i) is always met since <!-- MATH
+ $\ket{\psi(t)}$
+ -->
+<SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img134.png"
+ ALT="ALT="""></SPAN> is a state. In the case of a derivation over time, condition (ii) will be met as a direct consequence of Schrödinger's equation. We deal with the case of a partial derivation with respect to a (space) variable when the wave function is sufficiently well-behaved. Say <!-- MATH
+ $\Psi(x, t)$
+ -->
+<SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img135.png"
+ ALT="ALT="""></SPAN> is a wavefunction. Suppose the boundary conditions give us
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL"></SPAN></SPAN><P></P>
+<DIV CLASS="displaymath"><!-- MATH
+ \begin{equation}
+\lim_{x \to -\infty} \Psi(x, t) = \lim_{x \to +\infty} \Psi(x, t) = 0
+\end{equation}
+ -->
+<TABLE CLASS="equation" >
+<TR>
+<TD  style="text-align:center;"><SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img136.png"
+ ALT="ALT="""></SPAN></TD>
+<TD  CLASS="eqno" style="text-align:right">
+(<SPAN CLASS="arabic">39</SPAN>)</TD></TR>
+</TABLE></DIV>
+<P></P><SPAN CLASS="SMALL"><SPAN CLASS="SMALL">
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL">This assumption is very &ldquo;physical&rdquo;, but is not implied by <SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img137.png"
+ ALT="ALT="""></SPAN> being squared-integrable. Then, using integration by parts,
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL"></SPAN></SPAN><P></P>
+<DIV CLASS="displaymath"><!-- MATH
+ \begin{equation}
+\begin{split}
+ \braket{\Psi(t) | \frac{\partial}{\partial x} | \Psi(t)} &= \int_{-\infty}^\infty \Psi(x, t)^* \frac{\partial \Psi(x, t)}{\partial x} \mathrm{d}x\\
+ &= \left. \braket{\Psi(x, t)|\Psi(x, t)} \right|_{-\infty}^\infty - \int_{-\infty}^\infty (\frac{\partial \Psi(x, t)}{\partial x})^* \Psi(x, t) \mathrm{d}x\\
+ &= - (\braket{\Psi(t) | \frac{\partial}{\partial x} | \Psi(t)})^*
+\end{split}
+\end{equation}
+ -->
+<TABLE CLASS="equation" >
+<TR>
+<TD  style="text-align:center;"><SPAN CLASS="MATH"><IMG
+ STYLE="height: 0.21ex; vertical-align: -0.12ex; " SRC="img6.png"
+ ALT="\begin{indisplay}\begin{split}
+\braket{\Psi(t) \vert \frac{\partial}{\partial x}...
+...) \vert \frac{\partial}{\partial x} \vert \Psi(t)})^*
+\end{split}\end{indisplay}"></SPAN></TD>
+<TD  CLASS="eqno" style="text-align:right">
+(<SPAN CLASS="arabic">40</SPAN>)</TD></TR>
+</TABLE></DIV>
+<P></P><SPAN CLASS="SMALL"><SPAN CLASS="SMALL">
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL">Therefore the derivative operator is skew-hermitian and we always have <!-- MATH
+ $\braket{\psi'(t) | \psi(t)} \in i\mathbb{R}$
+ -->
+<SPAN CLASS="MATH"><IMG
+  STYLE="" SRC="img139.png"
+ ALT="ALT="""></SPAN>. Our postulate can be seen as &ldquo;physical&rdquo;.
+</SPAN></SPAN>
+<P>
+<SPAN CLASS="SMALL"><SPAN CLASS="SMALL"></SPAN></SPAN>
+<BR><HR>
+
+</BODY>
+</HTML>
