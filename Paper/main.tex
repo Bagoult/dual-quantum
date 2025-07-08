@@ -11,6 +11,7 @@
 \usepackage{braket}
 \usepackage{multicol}
 \usepackage{todonotes}
+\usepackage{graphicx}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -18,6 +19,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{thesis}[theorem]{Thesis}
+\newtheorem{example}[theorem]{Example}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
@@ -46,7 +48,7 @@
 
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
-\title{Postulates of quantum mechanics with dual-complex numbers}
+\title{Quantum mechanics over dual-complex numbers}
 
 \author{Nathan Houyet$^{a}$, Dogukan Bakircioglu$^{b}$, Pablo Arrighi$^{b}$ \\
         \small $^{a}$Université Paris-Saclay (student), France \\
@@ -58,8 +60,26 @@
 \maketitle
 
 \section{Introduction}
+
+We replace the complex field by the dual-complex ring in the postulates of quantum mechanics. This modification allow us to linearly approximate the action of families of quantum operations $\E_z(\rho)$ parametrized by a complex number $z$.
+
+These numbers are of the form $z + t \e$ where $\e^2 = 0$ and $z$ and $t$ are complex numbers. Intuitively $t\e$ symbolizes a small variation of $z$. Dual-complex numbers have found wide applications in automatic differentiation, mechanics and geometry. \cite{brodsky2000, baydin2018, yang1963, rev2016} Recent works have begun to extend our knowledge of dual-complex linear operators. \cite{qi2024, liu2025}
+
+In this paper, we build upon these developments by formulating a self-consistent set of postulates that extend conventional quantum theory into the realm of dual-complex numbers. We introduce translation rules that allow for efficient mapping between the dual-complex and conventional formalisms of quantum mechanics. Some of our results extend what was previously known about dual-complex unitary operators. These technical results may be of independant mathematical interest.
+
+We argue that our extension is physical and offers a rigourous framework for a widely used but often informal technique in physics—the neglect of higher-order terms in functional expansions. Since $\e^2=0$, the algebra of dual-complex numbers encodes first-order approximations, making it well-suited for modelling systems where higher-order effects should be neglected. We provide an example of application of our framework where it allows for an easy derivation of Dirac equation in a family of Quantum Cellular Automata (QCA).
+
+Beyond their technical utility, dual-complex numbers also provide a compelling perspective in foundational debates, particularly the tension between discrete and continuous models of physics. While discrete models are computationally convienient and visually intuitive, continuous models have been more studied and are sometimes easier to work with, especially when symmetries are concerned for instance. This raises the question of whether or not discrete models can fully represent Nature. \cite{kornyak2013, hossenfelder2012, stecker2011, chamseddine2014, chamseddine2017}.
+Through our example, we show that the dual-complex framework can has the potential to unify these two perspectives by combining a continuous base field $\C$ with an infinitesimal variation which represents a discrete step. Such an hybrid structure may facilitate smooth translations between continuous and discrete frameworks, potentially offering new tools for quantum computation, simulation and foundations.
+
+Dual-complex numbers constitute a new option in the foundational debate about which set of numbers is needed or useful to express quantum behaviors. Quantum theory based on extension of complex numbers such as quaternion numbers has been known for a long time (\cite{finkelstein1962}) while the debate on the necessity of complex numbers over real numbers is still raging. \cite{hoffreumon2025}
+
+In section 2, we recall all the required notions about dual-complex numbers for later sections. In section 3, we recall a few results about dual-complex linear operators and extend what is known about dual-complex unitary operators. We also define a notion of ordering required for our self-consistency check. In section 4, we use these results to present a set of postulates whose consistency is proved in section 5.
+Section 5 we introduce a translation from
+Finally, we present an application example in section 6.
+
 \section{Dual numbers}
-\noindent Extending real numbers with an imaginary unit $i$ with $i^2 = -1$ gives rise to the complex numbers. Complex numbers form a field and are used in quantum mechanics to represent physical systems and their evolution using complex linear algebra. The set of complex numbers is $\C = \{a + bi \; | \; a, b \in \R \text{ and } i^2 = 0\}$. If a number $z \in \C$ has the form $z = a + bi$ we denote $a$ the real part and $b$ the imaginary part. We can define the functions $\Re$ and $\Im$ as follows
+\noindent Extending real numbers with an imaginary unit $i$ with $i^2 = -1$ gives rise to the complex numbers. Complex numbers form a field and are used in quantum mechanics to represent physical systems and their evolution using complex linear algebra. The set of complex q is $\C = \{a + bi \; | \; a, b \in \R \text{ and } i^2 = 0\}$. If a number $z \in \C$ has the form $z = a + bi$ we denote $a$ the real part and $b$ the imaginary part. We can define the functions $\Re$ and $\Im$ as follows
 \begin{multicols}{3}
 \noindent
 \begin{equation}
@@ -205,7 +225,7 @@ The usefulness of dual numbers for differentiation comes from the following resu
 \begin{proposition}[Automatic differentiation]\label{pr:auto}
         Given $f(z)$, a function from complex to complex which is polymorphic on an open set $D$, there exists a unique polymorphic function $\hat{f}(w)$ defined on $D + \Z$ that agrees with $f(z)$ for every $w \in D$. This function $\hat{f}$ is given by
 \begin{equation}
-        \hat{f}(z + t\e) = f(z) + z f'(z) \e
+        \hat{f}(z + t\e) = f(z) + t \e f'(z)
 \end{equation}
 for $z \in D$ and $t \in \R$.
 \end{proposition}
@@ -229,7 +249,7 @@ Which can be rewritten as
 \end{equation}
 \end{proof}
 
-\begin{corollary} Dual-complex exponential, logarithm, sine and cosine are given by
+\begin{corollary}\label{corr:elsc} Dual-complex exponential, logarithm, sine and cosine are given by
 
 \begin{multicols}{2}
 \noindent \begin{equation}\label{eq:expscalar}
@@ -256,12 +276,6 @@ Which can be rewritten as
 In this section, we recall known and introduce new properties of $\D$ and $\DC$ required to show the consistency of our extension of quantum mechanics' postulates to dual-complex numbers in section 4.
 
 We first introduce in section 3.1 an ordering on dual numbers that will be needed to define a set of valid probabilities. In section 3.2, we motivate a choice of conjugation and norm on $\DC$, establish some properties about them before recalling results about diagonalization of dual-complex Hermitian operators. Finally, we establish that dual-complex unitary operators are also diagonalizable and establish their relation to dual-complex skew-Hermitian operators in the sense that they are the exponential and logarithm of each other.
-
-% Ajouter que ça commence à être des résultats inédits
-
-% \subsubsection*{Ring and quasi-field}
-%
-% $\DC$ forms a commutative ring with characteristic zero. We also have $\DC/\Z \approx \C$ and $\D/\e\R \approx \R$ which means that $\Z$ and $\e\R$ are maximally ideal.
 
 \subsubsection*{Ordering dual and dual-complex numbers}
 
@@ -331,7 +345,7 @@ The norm $|w|$ of $w = z + t\e$ is defined as $|w| = \sqrt{w^* w}$. We can obser
 w + \bar{w} = 2 \Re(z) + 2 \Re(t) \e
 \end{equation}
 
-\noindent \begin{equation}
+\noindent \begin{equation}\label{eq:eq0}
 |w| = 0 \iff z = 0
 \end{equation}
 
@@ -341,7 +355,7 @@ w + \bar{w} = 2 \Re(z) + 2 \Re(t) \e
 \bar{w_1  w_2} = \bar{w_1} ~ \bar{w_2}
 \end{equation}
 
-\noindent \begin{equation}
+\noindent \begin{equation}\label{eq:sqnorm}
 \bar{w}w = |z|^2 + 2 \Re(z\bar{t}) \in \D
 \end{equation}
 
@@ -372,8 +386,6 @@ In particular equations \ref{eq:geq0} and \ref{eq:modul} entails the following p
 \begin{proposition}
  For any $\ket{\psi} \in \DC^n$, $||\ket\psi|| = \sum_{k=1}^n \psi_k^* \psi_k \geq 0$.
 \end{proposition}
-%\begin{proof}[]
-%\end{proof}
 
 A vector in $\D^n$ or $\DC^n$ is called appreciable when its norm is non-zero or equivalently when at least one of its entries is appreciable. Two vectors are called orthogonal when their inner product is zero and appreciably orthogonal when their inner product is infinitesimal.
 
@@ -390,7 +402,7 @@ The following propositions are equivalent for $U_\e$ a linear operator:
  \item[c] $U_\e$ preserves the inner product, i.e.\ $(U_\e \ket\psi)^\dagger (U_\e \ket\phi) = \braket{\psi|\phi}$ and therefore the norm $||U_\e \ket\psi|| = ||\ket\psi||$.
  \item[d] Rows of $U_\e$ form an orthonormal basis.
  \item[e] Columns of $U_\e$ form an orthonormal basis.
- \item[f] $U_\e = U - i \e U H$ where $U$ is a complex unitary and $H$ is a complex Hermitian.
+ \item[f] $U_\e = (I + i \e H)U$ where $U$ is a complex unitary and $H$ is a complex Hermitian.
 \end{enumerate}
 \end{proposition}
 \begin{proof}
@@ -536,13 +548,13 @@ For the second statement, let $U_\e = \sum_j (\lambda_j + \e \sigma_j) \ketbra{j
 Let $H_1$ and $H_2$ be complex Hermitian matrices, $L_{\exp}(iH_1, iH_2)$ is of the form $iUH$ where $U$ is unitary and $H$ Hermitian.
 \end{corollary}
 
-Another result is required to extend the measurement postulate. We say the operator $E$ is appreciably positive if $\braket{\psi|E|\psi}$ positive and appreciable or exactly zero for every vector $\ket\psi$.
+Another result is required to extend the measurement postulate. We say the operator $E$ is appreciably semipositive if $\braket{\psi|E|\psi}$ positive and appreciable or exactly zero for every vector $\ket\psi$.
 
 \begin{proposition}\label{pr:semipos}
  For every dual-complex linear operator $M_\e$, $M_\e^\dagger M_\e$ is appreciably semipositive.
 \end{proposition}
 \begin{proof}
-Let $\ket\psi$ be an arbitrary vector and $\ket\phi = \sum_j \phi_j \ket{j} = M_\e \ket\psi$ for an orthonormal basis $\ket{j}$. Then $\braket{\psi|M_\e^\dagger M_\e|\psi} = \braket{\phi|\phi} = \sum_j \phi_j^*\phi_j$. From equations 28, 30 and 31 combined, we have that for all $j$, $\phi_j^* \phi_j$ is either appreciable or exactly zero and always greater or equal to zero. It follows that $M_\e^\dagger M_\e$ is appreciably semipositive.
+Let $\ket\psi$ be an arbitrary vector and $\ket\phi = \sum_j \phi_j \ket{j} = M_\e \ket\psi$ for an orthonormal basis $\ket{j}$. Then $\braket{\psi|M_\e^\dagger M_\e|\psi} = \braket{\phi|\phi} = \sum_j \phi_j^*\phi_j$. From equations \ref{eq:eq0}, \ref{eq:sqnorm} and \ref{eq:geq0} combined, we have that for all $j$, $\phi_j^* \phi_j$ is either appreciable or exactly zero and always greater or equal to zero. It follows that $M_\e^\dagger M_\e$ is appreciably semipositive.
 \end{proof}
 
 \section{Postulates of quantum theory over dual-complex numbers}
@@ -562,44 +574,18 @@ We present a suggestion of extension of the usual postulates of quantum theory, 
 \end{equation}
 
 \paragraph{Postulate 4.} Given two $\e$-states representing two systems, the composite system is represented by the tensor product of these two $\e$-states.
-\\
 
 \subsubsection*{State space}
 
 Postulate 1 aims at capturing the notion of the extension of a state vector to the dual-complex domain. The goal being to take a linear approximation of a system according to a certain parameter, we start at time zero with a usual complex unit vector that we evolve according to postulates 2 and 3, and so our states will always keep a norm equal to $1$.
 
 If we choose to start from a dual-complex vector, since the infinitesimal part of the vector represents the derivative of the significant part according to some parameter, equation \ref{eq:norm} tells us that the norm is one if and only if the derivation operator is skew-Hermitian.
-% \begin{equation}
-% \begin{split}
-%  \braket{\psi(t+\e z)|\psi(t+\e z)} &= \braket{\psi(t)|\psi(t)} + 2 z \Re(\braket{\psi(t)|\dstate \psi t}) \e\\
-%                                     &= 1 + 2 z \Re(\braket{\psi(t)|(-iH)|\psi(t)}) \e\\
-%                                     &= 1.\\
-% \end{split}
-% \end{equation}
-%
-% A second concern is when we extend space. Extending an analytic wavefunction to take a dual input can in theory lead to a norm that is not 1. However, when our wave function tends to zero when the position goes to $\pm \infty$, which is the case in an actual physical system, the derivative in space will always be skew-Hermitian. Say, if at a given time, we have the vector $\ket{\Psi} = \int_{-\infty}^\infty \Psi(x)\ket{x}\mathrm{d}x$ with boundary conditions
-%
-% \begin{equation}
-%  \lim_{x \to -\infty} \Psi(x) = \lim_{x \to +\infty} \Psi(x) = 0
-% \end{equation}
-%
-% Then
-%
-% \begin{equation}
-% \begin{split}
-%  \braket{\Psi| \frac{\partial}{\partial x} | \Psi} &= \int_{-\infty}^\infty \Psi(x)^* \frac{\partial \Psi(x)}{\partial x} \mathrm{d}x\\
-%  &= \left. \braket{\Psi(x)|\Psi(x)} \right|_{-\infty}^\infty - \int_{-\infty}^\infty (\frac{\partial \Psi(x)}{\partial x})^* \Psi(x) \mathrm{d}x\\
-%  &= - (\braket{\Psi | \frac{\partial}{\partial x} | \Psi})^*
-% \end{split}
-% \end{equation}
-%
-% Therefore the derivative operator is skew-hermitian and we always have $\braket{\Psi | \frac{\partial \Psi}{\partial x}} \in i\R$. This means that whenever the system is physical, it can be extended while keeping norm 1 at all time. We can therefore see our first extended postulate as ``physical''.
 
 \subsubsection*{Evolution}
 
-This postulate is motivated by the fact that given an analytic path of unitary $U(z)$, its dual-complex extension will be unitary (which is easily seen from the fact that the derivative $U(z)$ is of the form $iU(z)H(z)$ where $H(z)$ is Hermitian). $\e$-evolutions represent therefore a first-order approximation of traditional unitary evolutions.
+This postulate is motivated by the fact that given an analytic path of unitary $U(z)$, its dual-complex extension will be unitary (which is easily seen from the fact that the derivative $U(z)$ is of the form $iU(z)H(z)$ where $H(z)$ is Hermitian). $\e$-evolutions represent therefore a first-order approximation of complex unitary evolutions.
 
-In traditional quantum mechanics, this postulate is equivalently expressed through the Schrödinger equation. From proposition \ref{pr:hermunit}, we can restate our extension of postulate 2 as
+In conventional quantum mechanics, this postulate is equivalently expressed through the Schrödinger equation. From proposition \ref{pr:hermunit}, we can restate our extension of postulate 2 as
 
 \paragraph{Postulate 2'.} The evolution of a closed system is described by the Schrödinger equation,
 \begin{equation}
@@ -622,25 +608,23 @@ Similar to postulate 2, we extend general measurements with dual-complex operato
 \end{equation}
 \end{multicols}
 
-The traditional postulate for measurements also defines what are the resulting states and with which probability. To ensure our extension doesn't create unwanted behaviors, we must check that probabilities are positive and sum to one. We must also check that the resulting state is well defined as it is renormalized by a probability that could maybe be infinitesimal. Fortunately, such behaviors do not arise, as we show in the next section (\ref{pr:consistency}).
+The conventional postulate for measurements also defines what are the resulting states and with which probability. To ensure our extension doesn't create unwanted behaviors, we must check that probabilities are positive and sum to one. We must also check that the resulting state is well defined as it is renormalized by a probability that could maybe be infinitesimal. Fortunately, such behaviors do not arise, as we show in the next section (\ref{pr:consistency}).
 
-In particular, as in traditional quantum theory, we can see that when we have exactly one measurement operator, it is a unitary, which means that the extended postulate 2 can be reduced to the postulate 3.
+In particular, as in conventional quantum theory, we can see that when we have exactly one measurement operator, it is a unitary, which means that the extended postulate 2 can be reduced to the postulate 3.
 
 \subsubsection*{Composite systems}
 
-Composing systems is done in the traditional way, using tensor products. Again the postulate preserves the unit norm. If we have two $\e$-states $\ket\psi$ and $\ket\phi$, their norm will be $\sqrt{\braket\psi\psi \braket\phi\phi} = 1$.
+Composing systems is done in the usual, conventional way, using tensor products. Again the postulate preserves the unit norm. If we have two $\e$-states $\ket\psi$ and $\ket\phi$, their norm will be $\sqrt{\braket\psi\psi \braket\phi\phi} = 1$.
 
 \subsubsection*{Density operators formalism}
 
-We use the usual notion of density operators, which is easily seen to be compatible with the extended postulates. An $\e$-density operator $\rho$ is a dual-complex, unit-trace, positive operator. As in the traditional case, applying a unitary $U$ to $\rho$ yields $U \rho U^\dagger$ and measuring $\rho$ with $\{M_m\}$ yields $\sum_m M_m \rho M_m^\dagger$.
+We use the usual notion of density operators, which is easily seen to be compatible with the extended postulates. An $\e$-density operator $\rho$ is a dual-complex, unit-trace, positive operator. As in the conventional complex case, applying a unitary $U$ to $\rho$ yields $U \rho U^\dagger$ and measuring $\rho$ with $\{M_m\}$ yields $\sum_m M_m \rho M_m^\dagger$.
 
 \section{Consistency of the extended postulates}
 
 In this section, we show that the evolution of a system preserves the norm of the state vector (self-consistency) and that our postulates provide a first-order approximation of quantum systems.
 
 \subsubsection*{Self-consistency}
-\todo[inline]{
-Mettre un théorème qui dit que les $\e$-states sont stables sous les opérations physiques admises par $\e$-evolution et $\e$-measurement. Probabilités somment à 1 et sont positives. }
 
 \begin{proposition}\label{pr:consistency}
 A system that starts from an $\e$-states and is evolved by $\e$-evolutions and $\e$-measurements is described by an $\e$-state at all time, i.e.\ if there's a sequence $\ket{\psi_0}, \ket{\psi_1}, \dots, \ket{\psi_k}$ such that $\ket{\psi_0}$ is an $\e$-state and $\ket{\psi_{j+1}}$ was obtained either by applying an $\e$-unitary or an $\e$-measurement to $\ket{\psi_j}$, every $\ket{\psi_j}$ is an $\e$-state. Moreover, probabilities from any $\e$-measurement are either zero or appreciably positive and sum to one.
@@ -653,13 +637,9 @@ By proposition \ref{pr:unitary}, a dual-complex unitary preserves the norm. For 
 Probabilities sum to one since $\sum_m p(m) = \sum_m \braket{\psi|M_m^\dagger M_m|\psi} = \braket{\psi|(\sum_m M_m^\dagger M_m)|\psi} = \braket{\psi|I|\psi} = 1$ and are either zero or appreciably positive by proposition \ref{pr:semipos}.
 \end{proof}
 
-\subsubsection*{Consistency with traditional quantum theory}
+\subsubsection*{Consistency with conventional quantum theory}
 
-\todo[inline]{paramétrer les unitaires avec des parenthèses}
-
-\todo[inline]{Écrire la réciproque + rajouter des définitions pour tout faire dans la preuve de la proposition}
-
-\begin{definition}
+\begin{definition}\label{def:ext}
 We introduce the dual-complex extension of a quantum operation and the correction of dual-complex quantum operation.
 \begin{itemize}
  \item Let $\E_z(\rho)$ be a quantum operation analytic in $z$ whose operator-sum representation is, for some basis $\ket{e_k}$ and unitary operator $U_z$,
@@ -675,22 +655,22 @@ Let $\dot{\E_z} = \frac{\mathrm{d}\E_z}{\mathrm{d}z}$. We call $\E$'s dual-compl
 
  \item Let $\F_w(\rho)$ be a dual-complex extension of a quantum operation $\E_z(\rho)$ as in \ref{eq:opsum} where $w = z + \dot{z}\e$. Then $\F_w$ has the form
         \begin{equation}
-        \F_{w}(\rho) = tr_B(V_w [\rho \otimes \ketbra{e_0}{e_0}] V_w^\dagger)
+        \F_{w}(\rho) = tr_A(V_w [ \ketbra{e_0}{e_0} \otimes \rho V_w^\dagger)
         \end{equation}
-  where $V_w = U_z + \e \dot{z} \dot{U_z}$, $\dot{U_z} = \frac{\mathrm{d}U_z}{\mathrm{d}z} = iU_zH$ and $H$ is Hermitian. $\til{V}_w(h)$ is the complex correction of $V_w$ with parameter $h \in \C$, defined as
+  where $V_w = U_z + \e \dot{z} \dot{U_z}$, $\dot{U_z} = \frac{\mathrm{d}U_z}{\mathrm{d}z} = iU_zH$ and $H$ is Hermitian. $\til{V}_w(h)$ is the complex correction of $V_w$ with parameter $h \in \R$, defined as
         \begin{equation}
         \til{V}_w(h) = U_z + i \dot{z} h {U_z} H + h^2\sum_{n=0}^\infty \frac{1}{n!} (iH)^{n+2}h^n
         \end{equation}
-  $\til{\F}_w(\rho, h)$ is the complex correction of $\F_w(\rho, h)$ with parameter $h \in \C$, defined as
+  $\til{\F}_w(\rho, h)$ is the complex correction of $\F_w(\rho, h)$ with parameter $h \in \R$, defined as
         \begin{equation}\label{eq:corrF}
-        \til{F}_w(\rho, h) = tr_B(\til{V}_w(h) [\rho \otimes \ketbra{e_0}{e_0}] \til{V}_w(h)^\dagger)
+        \til{F}_w(\rho, h) = tr_A(\til{V}_w(h) [ \ketbra{e_0}{e_0} \otimes \rho ] \til{V}_w(h)^\dagger)
         \end{equation}
 \end{itemize}
 
 \end{definition}
 
-\begin{proposition}
-Let $\E_z(\rho)$ and $\F_w(\rho)$ be a quantum operation and its dual-complex extension. For any parameter $h \in \C$, the correction $\til{F}_w(\rho, h)$ is a valid quantum operation and $\til{F}_{z + \dot{z}\e}(\rho, h) = \E_z(\rho) + O(h^2)$.
+\begin{proposition}\label{pr:frbk}
+Let $\E_z(\rho)$ and $\F_w(\rho)$ be a quantum operation and its dual-complex extension. For any parameter $h \in \R$, the correction $\til{F}_w(\rho, h)$ is a valid quantum operation and $\til{F}_{z + \dot{z}\e}(\rho, h) = \E_z(\rho) + O(h^2)$.
 \end{proposition}
 
 \begin{proof}
@@ -707,85 +687,239 @@ It immediately follows that \ref{eq:corrF} is a quantum operation. For the secon
 \begin{align*}
 \mathcal{E}_{z+\dot{z}h}(\rho)
 &= \mathcal{E}_z(\rho) + \dot{z} h \dot{\mathcal{E}}(\rho) + O(h^2) \\
+~
+~
 \tilde{F}_{z+\dot{z}\e}(\rho, h)
-&= \operatorname{tr}_B\left(\til{V}_{z+\dot{z}\e}(h) \left[ \rho \otimes \ketbra{e_0}{e_0} \right] \til{V}_{z+\dot{z}\e}(h)^\dagger\right) \\
-&= \operatorname{tr}_B\left(\left( U_z + \dot{z} h \dot{U}_z + O(h^2) \right)
-\left[ \rho \otimes \ketbra{e_0}{e_0} \right]
+~
+&= \operatorname{tr}_A\left(\til{V}_{z+\dot{z}\e}(h) \left[ \ketbra{e_0}{e_0} \otimes \rho \right] \til{V}_{z+\dot{z}\e}(h)^\dagger\right) \\
+~
+&= \operatorname{tr}_A\left(\left( U_z + \dot{z} h \dot{U}_z + O(h^2) \right)
+\left[ \ketbra{e_0}{e_0} \otimes \rho \right]
 \left( U_z + \dot{z} h \dot{U}_z + O(h^2) \right)^\dagger\right)\\
-&=\operatorname{tr}_B\left(U_z \left[ \rho \otimes \ketbra{e_0}{e_0} \right] U_z^\dagger\right) \\
-&+ \operatorname{tr}_B\left(U_z \left[ \rho \otimes \ketbra{e_0}{e_0} \right] (\dot{z} h \dot{U}_z)^\dagger
-+ (\dot{z} h \dot{U}_z) \left[ \rho \otimes \ketbra{e_0}{e_0} \right] U_z^\dagger \right) + O(h^2)\\
+~
+&=\operatorname{tr}_A\left(U_z \left[ \ketbra{e_0}{e_0} \otimes \rho \right] U_z^\dagger\right) \\
+&+ \operatorname{tr}_A\left(U_z \left[ \ketbra{e_0}{e_0} \otimes \rho \right] (\dot{z} h \dot{U}_z)^\dagger
++ (\dot{z} h \dot{U}_z) \left[ \ketbra{e_0}{e_0} \otimes \rho \right] U_z^\dagger \right) + O(h^2)\\
+~
 &= \mathcal{E}_z(\rho) + \dot{z} h \dot{\mathcal{E}}_z(\rho) + O(h^2)
 \end{align*}
 \end{equation}
 \end{proof}
 
-\section{Application example: Quantum Cellular Automata}
+\begin{example}
+We have dual-complex quantum operation $\F(\rho) = \sum_m M_m \rho M_m^\dagger$.
 
-\todo[inline]{Rappeler le contexte}
-\todo[inline]{Ajouter la figure}
+\begin{multicols}{2}
+\noindent \begin{equation}
+ M_0 = \ketbra 0 0
+\end{equation}
 
-In this section, we introduce an example of analytic quantum systems from \cite{arrighi2020}, present their dual-complex extension and go back to traditional quantum systems.
+\noindent \begin{equation}
+ M_1 = \ketbra 0 1
+\end{equation}
 
-The Dirac QCA is
+\columnbreak
 
-The Quantum Cellular Automata is defined as in fig 1. All gates are identical and defined by
+\noindent \begin{equation}
+ N_0 = i \pi \ketbra 0 0
+\end{equation}
+
+\noindent \begin{equation}
+ N_1 = i \pi (\frac 1 {\sqrt 3} \ketbra 1 0 + \ketbra 0 1 - \frac 2 {\sqrt 6} \ketbra 1 1)
+\end{equation}
+\end{multicols}
+
+Our goal is to find a conventional quantum measurement collection $\til M_m(h)$ such that $\til M_m(h) = M_m + h N_m + O(h^2)$. To achieve this, we are going to apply \ref{def:ext} correction. First we need to rewrite $\F(\rho)$ as $tr_A(U_\e \left[ \ketbra{e_0}{e_0} \otimes \rho \right] U_\e^\dagger)$ where $U_\e$ is a dual-complex unitary. By \label{pr:unitary}, we can write $U_\e = U + \e \dot{U}$ where $\dot{U} = iHU$, $U$ is a conventional complex unitary and $H$ is a conventional complex Hermitian.
+
+To determine $U$, we see that the only constraint is that $\ket{m_A} U \bra{0_A} = M_m$ and that the SWAP gate is on that fulfills this condition. We therefore have
 
 \begin{equation}
-W_h = \begin{pmatrix}
-1 & 0 & 0 & 0\\
-0 & -is & c & 0\\
-0 & c & -is & 0\\
-0 & 0 & 0 & 1\\
+ U = \begin{pmatrix}
+        1 & 0 & 0 & 0 \\
+        1 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 1 \\
+     \end{pmatrix}
+\end{equation}
+
+To find a correct value for $\dot{U}$, we can use that its first two columns are defined by $N_m$ and that $U^\dagger\dot{U}$ must be Hermitian. Using this we can find the first two columns of $U^\dagger\dot{U}$ and complete the rest of the matrix to make it Hermitian. We eventually can find, among other possible solutions, $H$ defined by
+
+\begin{equation}
+ H = \frac \pi {\sqrt 6} \begin{pmatrix}
+        \sqrt{6} & 0 & 0        & -\sqrt 2 \\
+        0        & 0 & 0        & 0        \\
+        0        & 0 & \sqrt{6} & -2       \\
+        -\sqrt 2 & 0 & -2       & \sqrt{6} \\
+     \end{pmatrix}
+\end{equation}
+
+Then our corrections are defined by $\til M_m(h) = \ket{m_A} \exp(iH) U \bra{0_A}$ which is given by
+
+\begin{equation}
+ \til M_0(h) = \frac 1 6 \begin{pmatrix}
+         4e^{i \pi h} + e^{i \pi 2 h} + 1 & \sqrt 2 (2 e^{i \pi h} - e^{i \pi 2 h} - 1) \\
+         0 & 0
+     \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+ \til M_0(h) = \frac 1 6 \begin{pmatrix}
+         \sqrt 2 (2 e^{i \pi h} - e^{i \pi 2 h} - 1) & 2(e^{i \pi h} + e^{i \pi 2 h} + 1) \\
+         \sqrt{3}(e^{i \pi 2 h - 1}) & \sqrt{6} (1 - e^{i \pi 2 h})
+     \end{pmatrix}
+\end{equation}
+
+And have $\til \F_h(\rho) = \sum_m \til M_m(h) \rho \til M_m(h)^\dagger$, a valid convention quantum operation.
+
+\end{example}
+
+\section{Application example: Quantum Cellular Automata}
+
+In this section, we apply the dual-complex extension of quantum operations to a quantum walk. We first explain the quantum walk from \cite{arrighi2020} which simulates the movement of a fermion using discrete time and space. This discrete model exactly obeys the Dirac equation with an error term. We extend the quantum operation defined by this walk to the dual-complex and derive exactly the Dirac equation, hereby creating a bridge between a discrete and a continuous model of the fermion.
+
+The quantum walk represents a fermion moving either left or right. Space and time are made discrete with a step $h$. At each step, the fermion can either continue in the same direction or change its direction with an amplitude depending of its mass. $\ket{x+}$ and $\ket{x-}$ represents respectively a fermion moving right and left and the state of our fermion at time $t$ is given by $\ket{\psi(t)} = \sum_x \psi^+(x, t)\ket{x+}+\psi^-(x, t)\ket{x-}$. The relation between the amplitudes at step $t$ and at step $t+h$ is given by
+
+\begin{equation}
+ \begin{pmatrix}
+  \psi^+(x, t + h) \\
+  \psi^-(x-h, t + h)
+ \end{pmatrix} = W \begin{pmatrix}
+  \psi^-(x, t) \\
+  \psi^+(x-h, t)
+ \end{pmatrix}
+\end{equation}
+
+where $W$ is a gate defined by
+
+\begin{equation}
+W = W_h = \begin{pmatrix}
+-i\sin(mh) & \cos(mh) \\
+\cos(mh) & -i\sin(mh) \\
 \end{pmatrix}
 \end{equation}
 
-where $s = \sin(mh)$ and $c = \cos(mh)$. $W_h$ is approximated by
+Figure \ref{fig:diracqca} shows how $W$ acts on two sites and how the wires are then crossed. The action of these gates followed by the wire crossing defines a unitary action $U$ relating the state of the system at step $t$ and at step $t + h$.
+
+\begin{figure}[htp]
+\centering
+
+\begin{tikzpicture}[scale=1, every node/.style={scale=1}]
+% Define colors
+\definecolor{red}{RGB}{200,0,0}
+
+\foreach \x in {-1, 0, 1}
+        \foreach \y in {0, 1} {
+                \draw[black, thick] (2+2*\x,-1+2*\y) -- ++(1-.2, 1-.3);
+                \draw[red, thick] (2+2*\x, 1+2*\y) -- ++(1-.2, -1+.3);
+}
+\foreach \x in {0, 1, 2}
+        \foreach \y in {0, 1} {
+                \draw[red, thick] (2+2*\x,-1+2*\y) -- ++(-1+.2, 1-.3);
+                \draw[black, thick] (2+2*\x, 1+2*\y) -- ++(-1+.2, -1+.3);
+}
+
+\draw[black, dashed] (2, -1.2) -- (2, 2);
+\draw[black, dashed] (4, -1.1) -- (4, 3);
+\draw[black, dashed] (-1, -0.7) -- (7, -0.7);
+\draw[black, dashed] (-1, 1.3) -- (7, 1.3);
+
+\node at (2, -1.4) {$x-h$};
+\node at (4, -1.4) {$x$};
+
+\node at (7.3, 1.3) {$t$};
+\node at (7.3, -0.7) {$t-h$};
+
+% Rectangles (quantum gates)
+\node[draw, minimum width=1.5cm, minimum height=0.6cm] at (1,0) {W};
+\node[draw, minimum width=1.5cm, minimum height=0.6cm] at (3,0) {W};
+\node[draw, minimum width=1.5cm, minimum height=0.6cm] at (5,0) {W};
+\node[draw, minimum width=1.5cm, minimum height=0.6cm] at (1,2) {W};
+\node[draw, minimum width=1.5cm, minimum height=0.6cm] at (3,2) {W};
+\node[draw, minimum width=1.5cm, minimum height=0.6cm] at (5,2) {W};
+
+\node[scale=1.8] at (-1, 0) {$U$};
+\draw[->, line width=1.4pt] (-.5, -.7) -- ++(0, 2);
+\end{tikzpicture}
+
+    \caption{Dirac QCA}
+    \label{fig:diracqca}
+\end{figure}
+
+The global action of the walk at each step is a unitary $U =  U_h$ consisting of the tensor product of all the $W$ gates composed with the wires crossings. Since the wires crossings do not depend on $h$, we can compute the dual-complex extension of $U$, call it $U_\e$, by simply extending $W$. From \ref{corr:elsc}, we get
 
 \begin{equation}
 W_\e = \begin{pmatrix}
-1 & 0 & 0 & 0\\
-0 & -im\e & 1 & 0\\
-0 & 1 & -im\e & 0\\
-0 & 0 & 0 & 1\\
+-im\e & 1 \\
+1 & -im\e \\
 \end{pmatrix}
 \end{equation}
 
-The associated gate is
+By \ref{pr:auto}, we can see we have
 
 \begin{equation}
-W'_h = e^h \begin{pmatrix}
-1 & 0 & 0 & 0\\
-0 & 0 & e^{-im} & 0\\
-0 & e^{-im} & 0 & 0\\
-0 & 0 & 0 & 1\\
+\begin{split}
+  &\psi^+(x, t+\e) = \psi^+(x-\e, t) - im\e \psi^-(x, t) \\
+  \implies &\psi^+(x, t) + \e \frac{\partial}{\partial t}\psi^+(x, t) = \psi^+(x, t) - \e \frac{\partial}{\partial x} \psi^+(x, t) - im\e \psi^-(x, t) \\
+  \implies & \frac{\partial}{\partial t}\psi^+(x, t) = - \frac{\partial}{\partial x} \psi^+(x, t) - im \psi^-(x, t) \\
+ \end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+   &\psi^-(x, t+\e) = \psi^-(x+\e, t) - im\e \psi^+(x, t) \\
+  \implies &\psi^-(x, t) + \e \frac{\partial}{\partial t}\psi^-(x, t) = \psi^-(x, t) + \e \frac{\partial}{\partial x} \psi^-(x, t) - im\e \psi^+(x, t) \\
+  \implies & \frac{\partial}{\partial t}\psi^-(x, t) = \frac{\partial}{\partial x} \psi^-(x, t) - im \psi^+(x, t) \\
+ \end{split}
+\end{equation}
+
+These two equations can be rewritten in a condensed form which is equivaelent to the Dirac equation.
+
+\begin{equation}
+ \partial_t \psi = - \sigma_3 \partial_x \psi - im \sigma_1 \psi
+\end{equation}
+
+\begin{equation}
+\begin{split}
+ &(i(\sigma_1, \sigma_1 \sigma_3)^T \cdot (\partial_t, \partial_x) - mI) \psi(x, t) = 0 \\
+ &\implies (i \gamma^J \partial_J - m) \psi = 0
+\end{split}
+\end{equation}
+
+where
+\begin{equation}
+ \psi(x, t) = \begin{pmatrix}
+         \psi^+(x, t)\\
+         \psi^-(x, t)\\
+        \end{pmatrix}
+\end{equation}
+
+By \ref{pr:frbk}, it follows that as $h$ goes to zero, so does $h^2$ and therefore this quantum walk converges to a Dirac equation.
+
+Finally, we can complete this example by applying \ref{def:ext} and construct the correction of $W_\e$, $\til{W}_\e(h)$. Indeed, $W_\e$ is not a unitary in the conventional sense, so we can apply our correction get one. By following the process of \ref{eq:corrF}, we get.
+
+\begin{equation}
+\til{W}_\e(h) = W_h = \begin{pmatrix}
+-i\sin(hm) & \cos(hm) \\
+\cos(hm) & -i\sin(hm) \\
 \end{pmatrix}
 \end{equation}
 
-\todo[inline]{Montrer la limite, faire la limite vers l'équation de Dirac grâce à l'AD}
 
-\todo[inline]{Montrer que c'est stricement Lorentz covariant au sens de Lorentz discrete covariance du papier + faire le lien entre manière discrète de montrer que l'équation continue est covariante (au sens continu).}
+\section{Conclusion}
 
+In this paper, we demonstrated how extending quantum mechanics from complex numbers to dual-complex numbers can offer a fruitful bridge between continuous and discrete models.
 
-% \section{Alternative postulates}
-%
-% \subsubsection*{Pathological wave function}
-%
-% It is possible to build pathological normalizable, analyticl and continuous wave functions such that $r := \left. \braket{\Psi(x)|\Psi(x)} \right|_{-\infty}^\infty \neq 0$. In this case, we get $||\Psi(x + y \e)|| = 1 + y r \e$.
-%
-% \paragraph{Relaxed Postulate 1.} A pathological $\e$-state is a vector $\ket\psi$ in $\DC^n$ such that $||\ket\psi|| = 1 \mod \Z$.
-%
-% To preserve pathological $\e$-stateness, a valid operator $U_\e = U + \e V$ need only to satisfy $U$ unitary, as $U_\e = U \mod \Z$.
-%
-% \paragraph{Relaxed Postulate 2.} An $\e$-evolution of a pathological system is given by $U_\e = U + \e V$ where $U$ is unitary and $V$ is any linear operator.
-%
-% For measurement, probabilities should once again sum to one. But it would mean $U_\e^\dagger U_\e = I$, which sends us back to the well-behaved case. An extension modulo $\Z$ would be
-%
-% \paragraph{Relaxed Postulate 3.} A measurement is defined by a collection $\{M_m\}$ of measurement operators with $\sum_m M_m^\dagger M_m = I \mod \Z$.
-%
-% With the consequence of probabilities summing to $1 + \Z$, leading to negative infinitesimal probabilities (if $P(A) = 1 + \e$, $P(\bar{A}) = 1 - 1 - \e = -\e$).
-%
-% For postulate 4, we satisfy ourselves with noting that $||\ket\psi|| = ||\ket\phi|| = 1 \mod O_\e$ implies $||\ket\psi \otimes \ket\phi|| = 1 \mod O_\e$.
+First, we advanced our knowledge of dual-complex linear algebra by demonstrating that dual-complex unitary are 1) diagonalizable and 2) related to dual-complex Hermitian \textit{via} exponentiation and logarithm maps. We also introduced a notion of ordering on dual-complex numbers along with one of dual-complex semipositive operators.
+
+Second, we presented a set of postulates extending quantum mechanics by introducing an infinitesimal unit $\e$ satisfying $\e^2 = 0$. We establihed its self-consistency by showing norm and probabilities preservation, and showed that the equivalence between the Schrödinger's equation and unitary formulation of evolution of quantum system continues to hold in dual-complex quantum systems.
+
+Third, we introduced a translation between conventional and dual-complex quantum operation families, and proved these translations preserve the action of the operation up to the terms of order $O(h^2)$.
+
+Fourth, we applied these translations to a concrete example, ultimately deriving the Dirac equation in the dual-complex formalism from a discrete quantum walk.
+
+These results show the possibility and usefulness of applying dual-complex numbers to quantum theory. They are also of general mathematical interest as they contribute to the ongoing research on dual-complex linear operators.
+
+Future explorations could extend these translations to construct explicit bridges between discrete and continuous models in quantum mechanics. Additionnaly, the foundational debate on the set of numbers to use for quantum mechanics could also benefit of generalization of our extension to higher-order dual-complex numbers or general quaternions $H(\alpha, 0)$. An other direction would be to explore connections with Grassman numbers, which also obeys nilpotency conditions and may offer new ways of describing fermionic systems in a generalized dual-complex formalism of quantum mechanics.
 
 \bibliographystyle{johd}
 \bibliography{bib}
